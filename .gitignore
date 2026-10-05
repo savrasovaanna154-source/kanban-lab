@@ -37,4 +37,5 @@ Thumbs.db
 
 # Прочее
 .cache/
-tmp/
+tmp/.env.test
+.env.test
