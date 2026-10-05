@@ -4,6 +4,9 @@ import cors from 'cors';
 import helmet from 'helmet';
 import authRoutes from './routes/auth';
 import projectRoutes from './routes/projects';
+import boardRoutes from './routes/boards';
+import columnRoutes from './routes/columns';
+import cardRoutes from './routes/cards';
 import { prisma } from './lib/prisma';
 
 const app = express();
@@ -19,6 +22,9 @@ app.get('/health', (_req, res) => {
 
 app.use('/api/auth', authRoutes);
 app.use('/api/projects', projectRoutes);
+app.use('/api/boards', boardRoutes);
+app.use('/api/columns', columnRoutes);
+app.use('/api/cards', cardRoutes);
 
 app.use((_req, res) => {
   res.status(404).json({ error: { code: 'NOT_FOUND' } });
