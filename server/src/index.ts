@@ -30,13 +30,16 @@ app.use((_req, res) => {
   res.status(404).json({ error: { code: 'NOT_FOUND' } });
 });
 
-const server = app.listen(PORT, () => {
-  console.log(`🚀 Server: http://localhost:${PORT}`);
-});
+const server =
+  process.env.NODE_ENV !== 'test'
+    ? app.listen(PORT, () => {
+        console.log(`🚀 Server: http://localhost:${PORT}`);
+      })
+    : null;
 
 async function shutdown() {
   await prisma.$disconnect();
-  server.close(() => process.exit(0));
+  if (server) server.close(() => process.exit(0));
 }
 process.on('SIGINT', shutdown);
 process.on('SIGTERM', shutdown);

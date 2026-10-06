@@ -14,5 +14,4 @@ beforeEach(async () => {
 
 afterAll(async () => {
   await prisma.$disconnect();
-  await new Promise((resolve) => setTimeout(resolve, 100));
 });
