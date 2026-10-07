@@ -20,9 +20,9 @@ export async function createBoard(projectId: string, userId: string, name: strin
       projectId,
       columns: {
         create: [
-          { name: 'To Do', order: 0 },
-          { name: 'In Progress', order: 1 },
-          { name: 'Done', order: 2 },
+          { name: 'К выполнению', order: 0 },
+          { name: 'В работе', order: 1 },
+          { name: 'Готово', order: 2 },
         ],
       },
     },
@@ -31,10 +31,6 @@ export async function createBoard(projectId: string, userId: string, name: strin
 }
 
 export async function getBoard(id: string, userId: string) {
-  console.log('=== getBoard DEBUG ===');
-  console.log('id:', JSON.stringify(id));
-  console.log('userId:', JSON.stringify(userId));
-
   const board = await prisma.board.findUnique({
     where: { id },
     include: {
@@ -45,9 +41,6 @@ export async function getBoard(id: string, userId: string) {
       },
     },
   });
-
-  console.log('board found:', board ? 'YES' : 'NO');
-
   if (!board) throw new BoardError('NOT_FOUND', 'Доска не найдена', 404);
   if (board.project.ownerId !== userId) throw new BoardError('FORBIDDEN', 'Нет доступа', 403);
   return board;
